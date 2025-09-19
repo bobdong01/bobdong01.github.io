@@ -23,14 +23,14 @@ repository               : "bobdong01/bobdong01.github.io"
 #               Additional customization can be done by editing /_includes/author-profile.html
 author:
   # Biographic information
-  avatar           : "profile.png"
+  avatar           : "Professional Photo.jpg"
   name             : "Bob Dong"
   pronouns         : # example: "she/her"  
   bio              : "Short biography for the left-hand sidebar"
-  location         : "Earth"
-  employer         : "Red Brick University"
+  location         : "Baltimore, MD"
+  employer         : "Johns Hopkins University"
   uri              : # URL
-  email            : "none@example.org" 
+  email            : "bingrongdong01@gmail.com" 
 
   # Academic websites
   academia         : # URL
