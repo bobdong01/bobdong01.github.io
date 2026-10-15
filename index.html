@@ -1,0 +1,636 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Bob Dong · 董秉容</title>
+<meta name="description" content="Bob Dong (董秉容) — Johns Hopkins University. Algorithms with predictions, spectral graph theory.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Source+Serif+4:ital,opsz,wght@0,8..60,400..600;1,8..60,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<!-- Chinese faces, subset to the characters used on the page: brush script for the name and seal, Song-style serif for labels -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Ma+Shan+Zheng|Noto+Serif+SC:500&text=%E8%91%A3%E7%A7%89%E5%AE%B9%E5%8D%B0%E7%A0%94%E7%A9%B6%E8%AE%BA%E6%96%87%E6%95%99%E5%AD%A6%E4%BD%99%E4%BA%8B%E8%BF%91%E5%86%B5%E4%B8%80%E4%BA%8C&display=swap">
+<style>
+  /* Layout: a plain name bar; a hero that sets the name and a statement of interests beside the
+     Chinese inscription and seal (题款 + 印), with the portrait mounted in gold.
+     Sections are a two-column grid with a vertical, spine-style label rail (Chinese over English)
+     on the left and prose on the right; every rule between sections meets at a lotus. One column at
+     phone width. Palette: gold-flecked xuan paper, ink, cinnabar, gold leaf. */
+  :root {
+    --bg: #f6efe1;          /* xuan paper */
+    --surface: #fcf7ec;     /* silk mount */
+    --fg: #1d1811;          /* ink */
+    --muted: #6b6052;       /* diluted ink */
+    --rule: #dccfb4;        /* hairline, warm */
+    --accent: #b3321f;      /* cinnabar */
+    --seal: #bc3a28;        /* seal paste, the same in both themes */
+    --gold: #b8962e;        /* gold leaf */
+    --gold-2: #e6c96a;      /* foil highlight */
+    --gold-3: #8f6f1c;      /* foil shadow; readable gold for text */
+    --gold-text: #8f6f1c;
+    --mark: #c09a2e;        /* the prediction: the guessed vertex, the probability mass */
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .24 0 0 0 0 .19 0 0 0 0 .1 .16 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    --flecks: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='420' height='420'%3E%3Cg fill='%23c9a43a'%3E%3Ccircle cx='137.4' cy='66.1' r='2.0' opacity='0.38'/%3E%3Ccircle cx='342.4' cy='42.8' r='1.6' opacity='0.38'/%3E%3Ccircle cx='213.1' cy='19.4' r='1.3' opacity='0.58'/%3E%3Ccircle cx='103.2' cy='231.0' r='0.7' opacity='0.8'/%3E%3Ccircle cx='55.0' cy='96.0' r='2.0' opacity='0.67'/%3E%3Ccircle cx='29.5' cy='245.2' r='0.7' opacity='0.89'/%3E%3Ccircle cx='23.2' cy='357.7' r='1.1' opacity='0.58'/%3E%3Ccircle cx='226.8' cy='239.2' r='1.6' opacity='0.8'/%3E%3Ccircle cx='78.5' cy='243.6' r='2.0' opacity='0.45'/%3E%3Ccircle cx='44.1' cy='297.4' r='1.6' opacity='0.38'/%3E%3Ccircle cx='88.9' cy='284.3' r='1.3' opacity='0.78'/%3E%3Ccircle cx='195.8' cy='384.5' r='1.1' opacity='0.51'/%3E%3Ccircle cx='331.3' cy='292.0' r='0.9' opacity='0.4'/%3E%3Ccircle cx='127.7' cy='208.0' r='1.1' opacity='0.75'/%3E%3Ccircle cx='122.6' cy='407.8' r='0.7' opacity='0.63'/%3E%3Ccircle cx='72.0' cy='144.9' r='1.3' opacity='0.58'/%3E%3Ccircle cx='400.4' cy='36.0' r='1.6' opacity='0.67'/%3E%3Ccircle cx='364.7' cy='133.3' r='2.0' opacity='0.54'/%3E%3Ccircle cx='208.6' cy='332.3' r='0.7' opacity='0.81'/%3E%3Ccircle cx='393.2' cy='199.3' r='2.0' opacity='0.39'/%3E%3Ccircle cx='305.2' cy='131.6' r='1.6' opacity='0.9'/%3E%3Ccircle cx='342.6' cy='121.3' r='1.3' opacity='0.84'/%3E%3Ccircle cx='147.0' cy='391.5' r='1.1' opacity='0.44'/%3E%3Ccircle cx='52.2' cy='28.3' r='2.4' opacity='0.51'/%3E%3Ccircle cx='308.2' cy='167.9' r='2.4' opacity='0.62'/%3E%3Ccircle cx='72.5' cy='169.5' r='1.1' opacity='0.84'/%3E%3C/g%3E%3C/svg%3E");
+    --font-display: "Cormorant Garamond", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --font-body: "Source Serif 4", "Iowan Old Style", "Palatino Linotype", Georgia, serif;
+    --font-mono: "IBM Plex Mono", "SFMono-Regular", Menlo, Consolas, monospace;
+    --font-brush: "Ma Shan Zheng", "Kaiti SC", "STKaiti", "KaiTi", "AR PL UKai CN", "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "SimSun", "PingFang SC", "Microsoft YaHei", serif;
+    --font-song: "Noto Serif SC", "Noto Serif CJK SC", "Source Han Serif SC", "Songti SC", "SimSun", "PingFang SC", "Microsoft YaHei", serif;
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #15110d; --surface: #1d1813; --fg: #ece2cd; --muted: #a4988a; --rule: #3b3228;
+      --accent: #d9573f; --gold: #d2b256; --gold-2: #f0d98a; --gold-3: #9c7f33; --gold-text: #d2b256; --mark: #d2b256;
+      --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .9 0 0 0 0 .78 .1 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #15110d; --surface: #1d1813; --fg: #ece2cd; --muted: #a4988a; --rule: #3b3228;
+    --accent: #d9573f; --gold: #d2b256; --gold-2: #f0d98a; --gold-3: #9c7f33; --gold-text: #d2b256; --mark: #d2b256;
+    --grain: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='320' height='320'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .95 0 0 0 0 .9 0 0 0 0 .78 .1 0 0 0 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; scroll-padding-top: 1.5rem; }
+  body {
+    margin: 0; background: var(--bg); color: var(--fg);
+    font-family: var(--font-body); font-size: clamp(17px, .9rem + .25vw, 19px); line-height: 1.6;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+    transition: background-color .35s ease, color .35s ease;
+  }
+  /* paper grain and gold flecks (洒金) */
+  body::before, body::after { content: ""; position: fixed; inset: 0; z-index: 0; pointer-events: none; }
+  body::before { background-image: var(--grain); background-size: 320px 320px; opacity: .7; }
+  body::after { background-image: var(--flecks); background-size: 420px 420px; opacity: .6; }
+  ::selection { background: color-mix(in srgb, var(--gold) 30%, transparent); }
+  img { max-width: 100%; }
+  sup { font-size: .72em; line-height: 0; vertical-align: .45em; }
+  .page { position: relative; z-index: 1; max-width: 1360px; margin-inline: auto; padding-inline: clamp(16px, 5vw, 72px); padding-block: 0 3.5rem; }
+  a { color: var(--accent); text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--accent) 32%, transparent); }
+  a:hover { border-bottom-color: var(--gold); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+  .skip { position: absolute; left: -999px; top: 0; }
+  .skip:focus { left: 16px; top: 8px; background: var(--surface); padding: .4rem .7rem; z-index: 10; }
+  [lang="zh-Hans"] { font-family: var(--font-song); }
+  .zh { font-family: var(--font-song); color: var(--gold-text); }
+
+  /* ornament vocabulary: a symbol sheet at the top of the body, used by reference */
+  .orn { display: block; color: var(--gold); }
+
+  /* Name bar */
+  .topbar {
+    display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: .3rem 1.5rem;
+    padding-block: 1.4rem .4rem;
+  }
+  .brand { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; letter-spacing: .01em; color: var(--fg); border: 0; }
+  .brand .zh { font-size: .95rem; letter-spacing: .22em; margin-left: .7rem; vertical-align: .12em; }
+  .nav { display: flex; flex-wrap: wrap; gap: .25rem 0; margin: 0; padding: 0; list-style: none; }
+  .nav li + li::before { content: "·"; color: var(--gold); margin-inline: .9rem; }
+  .nav a { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--muted); border: 0; }
+  .nav a:hover { color: var(--accent); }
+  .bar-right { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem 1.4rem; }
+  /* 太极: the light and dark mode switch; it turns over when the theme does */
+  .theme-toggle { width: 1.9rem; height: 1.9rem; padding: 0; display: grid; place-items: center; background: transparent; border: 0; color: var(--gold); cursor: pointer; border-radius: 50%; }
+  .theme-toggle svg { width: 100%; height: 100%; display: block; transition: transform .7s ease; }
+  .theme-toggle .eye { fill: var(--bg); }
+  .theme-toggle.is-dark svg { transform: rotate(180deg); }
+  .theme-toggle:hover { color: var(--accent); }
+
+  /* Hero */
+  .hero { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2.5rem 3.5rem; align-items: start; padding-block: 4.5rem; }
+  .eyebrow { font-family: var(--font-mono); font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: var(--gold-text); margin: 0 0 1.3rem; }
+  .eyebrow::before { content: ""; display: inline-block; width: 1.6rem; height: 1px; background: var(--accent); vertical-align: middle; margin-right: .8rem; }
+  h1 {
+    font-family: var(--font-display); font-weight: 400; font-size: clamp(3rem, 7vw, 5.4rem);
+    line-height: .98; letter-spacing: .005em; margin: 0; text-wrap: balance;
+  }
+  /* the inscription: name in brush script, set vertically and in gold leaf, with the seal beneath (题款, 印);
+     it floats at the right of the name and the opening lines wrap around it */
+  .inscription { float: right; display: flex; flex-direction: column; align-items: center; gap: 1rem; margin: .2rem 0 1rem 2.2rem; }
+  .zh-name {
+    writing-mode: vertical-rl; text-orientation: upright; font-family: var(--font-brush); font-weight: 400;
+    font-size: 2.7rem; line-height: 1; letter-spacing: .14em;
+    background: linear-gradient(170deg, var(--gold-3) 0%, var(--gold-2) 38%, var(--gold) 58%, var(--gold-2) 82%, var(--gold-3) 100%);
+    -webkit-background-clip: text; background-clip: text; color: transparent; -webkit-text-fill-color: transparent;
+  }
+  .seal { width: 60px; height: 60px; color: var(--seal); transform: rotate(-3deg); }
+  .seal-text { fill: var(--bg); font-family: var(--font-brush); }
+  .seal-line { stroke: var(--bg); opacity: .5; }
+  .intro { max-width: 72ch; font-size: 1.06rem; margin-top: 1.6rem; }
+  .intro p { margin: 0 0 1em; }
+  .intro p:last-child { margin-bottom: 0; }
+  /* the Now box: a cinnabar frame with gold corners */
+  /* the two directions, numbered 一 and 二 */
+  .directions { list-style: none; counter-reset: dir; margin: 1.8rem 0 0; padding: 0; display: grid; gap: 1.5rem; max-width: 72ch; }
+  .directions li { position: relative; padding-left: 2.6rem; counter-increment: dir; }
+  .directions li::before {
+    content: counter(dir, simp-chinese-informal); position: absolute; left: 0; top: .2rem;
+    width: 1.7rem; height: 1.7rem; display: grid; place-items: center; border-radius: 50%;
+    border: 1px solid color-mix(in srgb, var(--gold) 60%, transparent);
+    font-family: var(--font-song); font-size: .9rem; line-height: 1; color: var(--gold-text);
+  }
+  .directions h2 { font-family: var(--font-display); font-weight: 500; font-size: 1.45rem; line-height: 1.25; margin: 0 0 .45rem; text-wrap: balance; }
+  .directions p { margin: 0; }
+  .now { position: relative; margin-top: 2rem; padding: 1rem 1.2rem 1rem 1.3rem; border: 1px solid color-mix(in srgb, var(--accent) 55%, transparent); max-width: 72ch; }
+  .now::before, .now::after { content: ""; position: absolute; width: 14px; height: 14px; border: 2px solid var(--gold); }
+  .now::before { top: -2px; left: -2px; border-right: 0; border-bottom: 0; }
+  .now::after { bottom: -2px; right: -2px; border-left: 0; border-top: 0; }
+  .now .tag { display: block; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .2em; text-transform: uppercase; color: var(--accent); margin-bottom: .35rem; }
+  .now .tag .zh { font-size: .8rem; letter-spacing: .2em; margin-left: .6rem; }
+  .now ul { margin: 0; padding: 0; list-style: none; display: grid; gap: .3rem; }
+  .links { margin: 2rem 0 0; }
+  .email { font-family: var(--font-mono); font-size: 1.15rem; letter-spacing: .04em; color: var(--accent); border-bottom: 1px solid color-mix(in srgb, var(--accent) 45%, transparent); }
+  .email:hover { border-bottom-color: var(--gold); }
+
+  /* the portrait: a double gold hairline mounts it like a hanging scroll */
+  .photo-wrap { padding: 8px; margin-top: 2.3rem; }
+  .photo {
+    position: relative; width: clamp(240px, 22vw, 320px); max-width: 100%; aspect-ratio: 4 / 5;
+    border: 1px solid var(--gold); background: var(--surface);
+    box-shadow: 0 0 0 5px var(--bg), 0 0 0 6px color-mix(in srgb, var(--gold) 70%, transparent);
+    display: grid; place-items: center; overflow: hidden;
+  }
+  .photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .monogram { font-family: var(--font-display); font-size: 6.5rem; font-weight: 300; color: var(--accent); line-height: 1; }
+  .photo .hint { position: absolute; bottom: .7rem; left: 0; right: 0; text-align: center; font-family: var(--font-mono); font-size: .66rem; letter-spacing: .08em; color: var(--muted); }
+
+  /* section rules meet at a lotus */
+  .fleuron { display: flex; align-items: center; gap: 1.4rem; color: var(--gold); }
+  .fleuron::before, .fleuron::after { content: ""; flex: 1; height: 1px; background: linear-gradient(90deg, var(--rule), var(--gold) 50%, var(--rule)); }
+  .fleuron::before { background: linear-gradient(90deg, var(--rule), var(--gold)); }
+  .fleuron::after { background: linear-gradient(90deg, var(--gold), var(--rule)); }
+  .fleuron .orn { width: 50px; height: auto; flex: none; }
+  .fleuron + .section { border-top: 0; }
+
+  /* Sections */
+  .section { display: grid; grid-template-columns: 3.2rem minmax(0, 1fr); gap: 1rem 2.5rem; padding-block: 4.2rem; border-top: 1px solid var(--rule); }
+  .section > .label {
+    writing-mode: vertical-rl; text-orientation: mixed;
+    font-family: var(--font-mono); font-size: .68rem; letter-spacing: .3em; text-transform: uppercase; color: var(--muted);
+    position: sticky; top: calc(env(safe-area-inset-top, 0px) + 1.5rem); align-self: start; justify-self: start;
+    padding: .15rem 0 .4rem .75rem; border-left: 1px solid var(--gold);
+  }
+  .section > .label::before { content: ""; display: inline-block; width: 5px; height: 5px; background: var(--accent); margin-inline-end: .75rem; vertical-align: middle; }
+  .section > .label .zh { font-size: 1.1rem; letter-spacing: .3em; text-transform: none; margin-inline-end: .7rem; }
+  .section h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.9rem, 3.2vw, 2.5rem); line-height: 1.15; letter-spacing: -.005em; margin: 0 0 1.4rem; text-wrap: balance; }
+  .section h2::after { content: ""; display: block; width: 3.2rem; height: 2px; margin-top: .65rem; background: linear-gradient(90deg, var(--accent), var(--gold)); }
+  .section h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; line-height: 1.25; margin: 0 0 .55rem; text-wrap: balance; }
+  .prose { max-width: 72ch; }
+  .prose p { margin: 0 0 1.1em; }
+  .prose p:last-child { margin-bottom: 0; }
+  .with { font-family: var(--font-mono); font-size: .7rem; letter-spacing: .08em; color: var(--gold-text); margin: 0 0 .5rem; }
+
+  /* Research */
+  .projects { display: grid; }
+  .project { padding-block: 1.9rem; border-top: 1px solid var(--rule); }
+  .projects .project:first-child { border-top: 0; }
+  .project.split { display: grid; grid-template-columns: minmax(0, 1fr) clamp(280px, 28vw, 360px); gap: 1.6rem 3rem; align-items: start; }
+  .figure { margin: 0; padding: 1.2rem 1rem; border: 1px solid var(--gold); background: var(--surface); box-shadow: 0 0 0 4px var(--bg), 0 0 0 5px color-mix(in srgb, var(--gold) 70%, transparent); }
+  .figure svg { width: 100%; height: auto; display: block; }
+  .figure .edges line { stroke: var(--rule); stroke-width: 1.6; stroke-linecap: round; }
+  .figure .spine line { stroke: var(--gold); stroke-opacity: .35; stroke-width: 4; stroke-linecap: round; }
+  .figure .route { fill: none; stroke: var(--accent); stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+  .figure .nodes circle { fill: var(--surface); stroke: var(--fg); stroke-opacity: .35; stroke-width: 1; }
+  .figure .mass circle { fill: var(--mark); stroke: var(--fg); stroke-opacity: .25; stroke-width: 1; }
+  .figure .pred { fill: var(--mark); stroke: none; }
+  .figure .target { fill: var(--accent); stroke: none; }
+  .figure .ring { fill: none; stroke: var(--accent); stroke-width: 1.6; }
+  .figure .lbl { font-family: var(--font-mono); font-size: 9.5px; fill: var(--muted); }
+  .figure .lbl.hi { fill: var(--accent); }
+  .figure .probe { fill: var(--accent); }
+  .figure .static { display: none; }
+
+  /* Papers */
+  .paper { display: grid; gap: .5rem; padding-block: 1.5rem; border-top: 1px solid var(--rule); }
+  .papers .paper:first-child { border-top: 0; padding-top: 0; }
+  .paper .title { font-family: var(--font-display); font-size: 1.55rem; font-weight: 500; line-height: 1.25; margin: 0; text-wrap: balance; }
+  .paper .meta { color: var(--muted); display: flex; flex-wrap: wrap; gap: .4rem .9rem; align-items: center; font-size: .95rem; }
+  .paper .abstract { margin: .2rem 0 0; max-width: 72ch; }
+  .paper .out { display: flex; flex-wrap: wrap; gap: .4rem 1.2rem; font-family: var(--font-mono); font-size: .78rem; }
+  .chip { font-family: var(--font-mono); font-size: .64rem; letter-spacing: .08em; text-transform: uppercase; border: 1px solid color-mix(in srgb, var(--gold) 55%, transparent); border-radius: 2px; padding: .22rem .55rem; color: var(--gold-text); background: var(--surface); white-space: nowrap; }
+  .chip.live { border-color: color-mix(in srgb, var(--accent) 60%, transparent); color: var(--accent); }
+
+  /* Rows (teaching, CV) */
+  .rows { display: grid; }
+  .row { display: grid; grid-template-columns: 10rem minmax(0, 1fr); gap: .2rem 1.5rem; padding-block: .9rem; border-top: 1px solid var(--rule); }
+  .rows .row:first-child { border-top: 0; padding-top: 0; }
+  .when { font-family: var(--font-mono); font-size: .76rem; color: var(--muted); font-variant-numeric: tabular-nums; padding-top: .3rem; letter-spacing: .02em; }
+  .what strong { font-weight: 600; }
+  .what .sub { color: var(--muted); }
+
+  /* Footer, under a lotus rule, signed with the seal */
+  footer { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: .5rem 1.5rem; padding-top: 1.6rem; font-family: var(--font-mono); font-size: .68rem; letter-spacing: .08em; color: var(--muted); }
+  footer .band { flex: 0 0 100%; margin-bottom: .8rem; }
+  footer .right { display: inline-flex; align-items: center; gap: .9rem; }
+  footer .seal { width: 26px; height: 26px; }
+
+  @media (max-width: 760px) {
+    body { font-size: 16px; }
+    /* name and switch on the first row, the sections on their own row beneath */
+    .topbar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 1rem; row-gap: .5rem; padding-block: 1rem .2rem; }
+    .bar-right { display: contents; }
+    .brand { grid-column: 1; grid-row: 1; }
+    .theme-toggle { grid-column: 2; grid-row: 1; }
+    .bar-right nav { grid-column: 1 / -1; grid-row: 2; }
+    .nav a { font-size: .62rem; letter-spacing: .14em; }
+    .nav li + li::before { margin-inline: .55rem; }
+    .hero { grid-template-columns: 1fr; gap: 1.8rem; padding-block: 2.4rem; align-items: start; }
+    .hero .photo-wrap { order: -1; margin-top: 0; }
+    .photo { width: 150px; }
+    .monogram { font-size: 4.2rem; }
+    .inscription { margin: .1rem 0 .8rem 1.2rem; gap: .7rem; }
+    .zh-name { font-size: 1.9rem; }
+    .seal { width: 44px; height: 44px; }
+    .directions li { padding-left: 2.3rem; }
+    .email { font-size: 1.05rem; }
+    .fleuron .orn { width: 42px; }
+    .section { grid-template-columns: 1fr; gap: .6rem; padding-block: 2.4rem; }
+    .section > .label { writing-mode: horizontal-tb; position: static; padding: 0; border-left: 0; }
+    .section > .label .zh { font-size: .95rem; margin-inline-end: .5rem; }
+    .project.split { grid-template-columns: 1fr; }
+    .row { grid-template-columns: 1fr; gap: .1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .theme-toggle svg { transition: none; }
+    body { transition: none; }
+    .figure .probe, .figure .anim { display: none; }
+    .figure .static { display: block; }
+  }
+</style>
+<script>
+  (function () {
+    try {
+      var t = localStorage.getItem('theme');
+      if (t === 'dark' || t === 'light') document.documentElement.setAttribute('data-theme', t);
+    } catch (e) {}
+  })();
+</script>
+</head>
+<body>
+<a class="skip" href="#about">Skip to content</a>
+
+<!-- Symbol sheet: the seal and the lotus, referenced below -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <filter id="stamp" x="-10%" y="-10%" width="120%" height="120%">
+      <feTurbulence type="fractalNoise" baseFrequency=".8" numOctaves="2" seed="9" result="r"/>
+      <feDisplacementMap in="SourceGraphic" in2="r" scale="2.4" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+    <symbol id="seal" viewBox="0 0 64 64">
+      <g filter="url(#stamp)">
+        <rect x="2" y="2" width="60" height="60" rx="3" fill="currentColor"/>
+        <rect class="seal-line" x="6" y="6" width="52" height="52" rx="1" fill="none" stroke-width="1"/>
+        <g class="seal-text" font-size="21" text-anchor="middle" dominant-baseline="central">
+          <text x="46" y="19">董</text>
+          <text x="46" y="45">秉</text>
+          <text x="18" y="19">容</text>
+          <text x="18" y="45">印</text>
+        </g>
+      </g>
+    </symbol>
+    <symbol id="lotus" viewBox="0 0 84 50">
+      <g fill="none" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round" stroke-linecap="round">
+        <path d="M42 40C36 32 36 20 42 10C48 20 48 32 42 40Z"/>
+        <path d="M42 40C33 38 24 30 25 16C33 22 40 30 42 40Z"/>
+        <path d="M42 40C51 38 60 30 59 16C51 22 44 30 42 40Z"/>
+        <path d="M42 40C30 42 16 38 10 26C20 28 32 32 42 40Z"/>
+        <path d="M42 40C54 42 68 38 74 26C64 28 52 32 42 40Z"/>
+        <path d="M42 36C39 30 39 24 42 18" opacity=".55"/>
+        <path d="M35 36C33 31 32 26 34 21" opacity=".55"/>
+        <path d="M49 36C51 31 52 26 50 21" opacity=".55"/>
+        <path d="M20 43Q42 48 64 43" opacity=".7"/>
+        <path d="M28 46.5Q42 49.5 56 46.5" opacity=".4"/>
+      </g>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="page">
+  <header class="topbar">
+    <a class="brand" href="#about">Bob Dong<span class="zh" lang="zh-Hans">董秉容</span></a>
+    <div class="bar-right">
+      <nav aria-label="Sections">
+        <ul class="nav">
+          <li><a href="#research">Research</a></li>
+          <li><a href="#papers">Papers</a></li>
+          <li><a href="#teaching">Teaching</a></li>
+        </ul>
+      </nav>
+      <button class="theme-toggle" type="button" aria-label="Switch to dark mode" title="Switch to dark mode">
+        <svg viewBox="0 0 40 40" aria-hidden="true" focusable="false">
+          <circle cx="20" cy="20" r="18" fill="none" stroke="currentColor" stroke-width="1.2"/>
+          <path d="M20 2A18 18 0 0 0 20 38A9 9 0 0 0 20 20A9 9 0 0 1 20 2Z" fill="currentColor"/>
+          <circle class="eye" cx="20" cy="29" r="2.6"/>
+          <circle cx="20" cy="11" r="2.6" fill="currentColor"/>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <section class="hero" id="about">
+    <div>
+      <p class="eyebrow">Johns Hopkins University · Computer Science &amp; Mathematics</p>
+      <div class="inscription" lang="zh-Hans">
+        <span class="zh-name">董秉容</span>
+        <svg class="seal" role="img" aria-label="董秉容印" viewBox="0 0 64 64"><use href="#seal"/></svg>
+      </div>
+      <h1>Bob Dong</h1>
+      <div class="intro">
+        <p>I'm a senior at Johns Hopkins, double majoring in computer science and mathematics. I work with <a href="https://www.cs.jhu.edu/~mdinitz">Michael Dinitz</a> on algorithms with predictions.</p>
+        <p>My interests are in the design of efficient algorithms and in their analysis beyond the worst case, through learning-augmented, per-instance, and smoothed guarantees. I want to understand how algorithms can be made more efficient along two lines.</p>
+      </div>
+      <ol class="directions">
+        <li>
+          <h2>Spectral graph theory and streaming algorithms</h2>
+          <p>I am drawn to the connection between graph spectra and algorithms: Laplacian solvers, spectral sparsifiers, and expander decompositions underlie the fastest known algorithms for flows, cuts, and dynamic graph problems. The question I want to pursue is how much of this machinery survives when the algorithm cannot see the whole graph. Spectral sparsification and expander decomposition can both be computed in a single pass over a graph stream; I want to know which other spectral primitives can, in streaming, query, and local models, and what they buy for sublinear graph algorithms. High-dimensional expanders enter the same question from the other side: their local-to-global theorems turn spectral conditions on links into global expansion, have already given algorithms for counting matroid bases and approximating constraint satisfaction, and are exactly the kind of certificate a sublinear algorithm can check locally.</p>
+        </li>
+        <li>
+          <h2>A general theory of learning-augmented algorithms, and beyond</h2>
+          <p>Learning-augmented algorithms for ski rental, caching, scheduling, matching, and search have been developed one problem at a time, each with its own notion of prediction and error. Yet many of these problems come in families with a shared classical analysis. I want to know whether the structure carries over at the level of the family: for a class of problems with similar classical solutions, which parameter governs the value of a prediction, and what per-instance optimality is achievable. A further question is whether methods that are not explicitly algorithmic, such as learned heuristics used when the real-world variables are too complicated to model, can be analyzed with the tools of theoretical computer science and can benefit from the same framework.</p>
+        </li>
+      </ol>
+      <div class="now">
+        <span class="tag">Now<span class="zh" lang="zh-Hans">近况</span></span>
+        <ul>
+          <li><em>Tree Search With Predictions</em> was accepted at NeurIPS 2026.</li>
+          <li>TA for graduate Introduction to Algorithms and for Introduction to Optimization.</li>
+        </ul>
+      </div>
+      <p class="links"><a class="email" href="mailto:bdong9@jh.edu">bdong9@jh.edu</a></p>
+    </div>
+    <div class="photo-wrap">
+      <div class="photo">
+        <img src="image.png" alt="Bob Dong">
+      </div>
+    </div>
+  </section>
+
+  <div class="fleuron" aria-hidden="true"><svg class="orn" viewBox="0 0 84 50" focusable="false"><use href="#lotus"/></svg></div>
+
+  <section class="section" id="research">
+    <div class="label"><span class="zh" lang="zh-Hans">研究</span>Research</div>
+    <div>
+      <h2>Algorithms with predictions</h2>
+      <div class="prose">
+        <p>Worst-case analysis assumes an algorithm knows nothing about its input. In practice it usually knows something: a learned estimate, a sample from a related distribution, a heuristic that was right last time. The design problem is to use that information so the algorithm beats the classical bound when the prediction is good, matches it when the prediction is useless, and degrades smoothly in between.</p>
+      </div>
+      <div class="projects">
+
+        <article class="project split">
+          <div>
+            <p class="with">with Michael Dinitz · NeurIPS 2026</p>
+            <h3>Tree search with predictions</h3>
+            <div class="prose">
+              <p>A target <em>t</em> is hidden at a vertex of a tree. A query at a vertex either finds <em>t</em> or reveals which component of the tree, with that vertex removed, contains it. On a sorted array, a prediction <em>s</em> of the target's position lets doubling binary search finish in O(log η) queries, where η is the prediction error. Does the same hold on a tree, with η the distance from <em>s</em> to <em>t</em>?</p>
+              <p>In general, no: no deterministic or randomized algorithm achieves O(log η) on every tree. But on trees of pathwidth <em>k</em>, a search that runs one doubling binary search per spine of the decomposition finds the target in O(<em>k</em> log η) queries, and no algorithm can beat Ω(<em>k</em> log η) across such trees. Running centroid search alongside keeps the classical O(log <em>n</em>) as a fallback. On spanning trees of real networks, the method beats both centroid search and naive tracing over a middle band of prediction errors.</p>
+            </div>
+          </div>
+          <figure class="figure">
+            <svg viewBox="0 0 330 205" role="img" aria-labelledby="fig1-title">
+              <title id="fig1-title">A tree decomposed into two spines. From the predicted vertex s, queries jump along the first spine at distances 1, 2, 4 and 8, step back to the vertex where the target's branch hangs, then repeat on the second spine until they reach the target t.</title>
+              <g class="edges">
+                <line x1="80" y1="60" x2="70" y2="90"/>
+                <line x1="110" y1="60" x2="114" y2="30"/>
+                <line x1="140" y1="60" x2="128" y2="92"/>
+                <line x1="170" y1="60" x2="176" y2="30"/>
+                <line x1="230" y1="60" x2="236" y2="30"/>
+                <line x1="260" y1="60" x2="262" y2="92"/>
+              </g>
+              <g class="spine">
+                <line x1="20" y1="60" x2="290" y2="60"/>
+                <line x1="200" y1="60" x2="290" y2="190"/>
+              </g>
+              <g class="static">
+                <path class="route" d="M20 60 L260 60 M200 60 L254 138"/>
+              </g>
+              <g class="nodes">
+                <circle cx="70" cy="90" r="4"/><circle cx="114" cy="30" r="4"/><circle cx="128" cy="92" r="4"/>
+                <circle cx="176" cy="30" r="4"/><circle cx="236" cy="30" r="4"/><circle cx="262" cy="92" r="4"/>
+                <circle cx="50" cy="60" r="5"/><circle cx="80" cy="60" r="5"/><circle cx="110" cy="60" r="5"/>
+                <circle cx="140" cy="60" r="5"/><circle cx="170" cy="60" r="5"/><circle cx="200" cy="60" r="5"/>
+                <circle cx="230" cy="60" r="5"/><circle cx="260" cy="60" r="5"/><circle cx="290" cy="60" r="5"/>
+                <circle cx="218" cy="86" r="5"/><circle cx="236" cy="112" r="5"/><circle cx="272" cy="164" r="5"/><circle cx="290" cy="190" r="5"/>
+              </g>
+              <circle class="pred" cx="20" cy="60" r="5.5"/>
+              <circle class="target" cx="254" cy="138" r="5.5"/>
+              <text class="lbl hi" x="10" y="49">s</text>
+              <text class="lbl hi" x="262" y="133">t</text>
+              <text class="lbl" x="47" y="80">1</text>
+              <text class="lbl" x="77" y="80">2</text>
+              <text class="lbl" x="137" y="80">4</text>
+              <text class="lbl" x="257" y="80">8</text>
+              <text class="lbl" x="266" y="50">spine 1</text>
+              <text class="lbl" x="206" y="150">spine 2</text>
+              <g class="anim">
+                <circle class="ring" cx="50" cy="60" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.0909;.11;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="ring" cx="80" cy="60" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.1818;.2;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="ring" cx="140" cy="60" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.2727;.29;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="ring" cx="260" cy="60" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.3636;.38;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="ring" cx="200" cy="60" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.4545;.47;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="ring" cx="218" cy="86" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.5455;.56;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="ring" cx="236" cy="112" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.6364;.65;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="ring" cx="272" cy="164" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.7273;.74;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="ring" cx="254" cy="138" r="9"><animate attributeName="opacity" values="0;0;1;1" keyTimes="0;.8182;.84;1" dur="11s" repeatCount="indefinite"/></circle>
+                <circle class="probe" r="4">
+                  <animateMotion dur="11s" repeatCount="indefinite" calcMode="linear"
+                    path="M20 60 L50 60 L80 60 L140 60 L260 60 L200 60 L218 86 L236 112 L272 164 L254 138"
+                    keyPoints="0;0;.0655;.0655;.1310;.1310;.2619;.2619;.5239;.5239;.6549;.6549;.7239;.7239;.7929;.7929;.9310;.9310;1;1"
+                    keyTimes="0;.05;.0909;.1409;.1818;.2318;.2727;.3227;.3636;.4136;.4545;.5045;.5455;.5955;.6364;.6864;.7273;.7773;.8182;1"/>
+                </circle>
+              </g>
+            </svg>
+          </figure>
+        </article>
+
+        <article class="project split">
+          <div>
+            <p class="with">with Michael Dinitz · preprint, 2026</p>
+            <h3>Tree search with distributional predictions</h3>
+            <div class="prose">
+              <p>Here the prediction is not a single vertex but a distribution over where the target might be, and the searcher has to decide how much to lean on it. We give query-complexity guarantees for this setting with matching lower bounds; the bounds depend on the tree's pathwidth and on the entropy of the predicted target, so a confident prediction buys more than a diffuse one. An empirical evaluation accompanies the theory.</p>
+            </div>
+          </div>
+          <figure class="figure">
+            <svg viewBox="0 0 330 200" role="img" aria-labelledby="fig2-title">
+              <title id="fig2-title">A tree with a highlighted search path to a ringed target vertex; shaded vertices show predicted probability mass.</title>
+              <g class="edges">
+                <line x1="160" y1="24" x2="92" y2="72"/>
+                <line x1="160" y1="24" x2="228" y2="72"/>
+                <line x1="92" y1="72" x2="52" y2="120"/>
+                <line x1="92" y1="72" x2="132" y2="120"/>
+                <line x1="228" y1="72" x2="196" y2="120"/>
+                <line x1="228" y1="72" x2="276" y2="120"/>
+                <line x1="52" y1="120" x2="36" y2="168"/>
+                <line x1="132" y1="120" x2="112" y2="168"/>
+                <line x1="132" y1="120" x2="152" y2="168"/>
+                <line x1="196" y1="120" x2="182" y2="168"/>
+                <line x1="196" y1="120" x2="214" y2="168"/>
+                <line x1="276" y1="120" x2="258" y2="168"/>
+                <line x1="276" y1="120" x2="294" y2="168"/>
+              </g>
+              <path class="route" d="M160 24 L92 72 L132 120 L152 168"/>
+              <g class="mass">
+                <circle cx="160" cy="24" r="6.5" fill-opacity=".06"/>
+                <circle cx="92" cy="72" r="6.5" fill-opacity=".14"/>
+                <circle cx="228" cy="72" r="6.5" fill-opacity=".08"/>
+                <circle cx="52" cy="120" r="6.5" fill-opacity=".10"/>
+                <circle cx="132" cy="120" r="6.5" fill-opacity=".32"/>
+                <circle cx="196" cy="120" r="6.5" fill-opacity=".12"/>
+                <circle cx="276" cy="120" r="6.5" fill-opacity=".06"/>
+                <circle cx="36" cy="168" r="6.5" fill-opacity=".18"/>
+                <circle cx="112" cy="168" r="6.5" fill-opacity=".50"/>
+                <circle cx="152" cy="168" r="6.5" fill-opacity=".90"/>
+                <circle cx="182" cy="168" r="6.5" fill-opacity=".30"/>
+                <circle cx="214" cy="168" r="6.5" fill-opacity=".10"/>
+                <circle cx="258" cy="168" r="6.5" fill-opacity=".06"/>
+                <circle cx="294" cy="168" r="6.5" fill-opacity=".06"/>
+              </g>
+              <circle class="ring" cx="152" cy="168" r="11.5"/>
+              <text class="lbl hi" x="172" y="21">q1</text>
+              <text class="lbl hi" x="60" y="70">q2</text>
+              <text class="lbl hi" x="143" y="113">q3</text>
+              <circle class="probe" r="4">
+                <animateMotion dur="5s" repeatCount="indefinite" calcMode="linear" keyPoints="0;0;1;1" keyTimes="0;0.15;0.8;1" path="M160 24 L92 72 L132 120 L152 168"/>
+              </circle>
+            </svg>
+          </figure>
+        </article>
+
+        <article class="project">
+          <p class="with">ongoing · with Michael Dinitz</p>
+          <h3>Graph search with predictions</h3>
+          <div class="prose">
+            <p>The same question on general graphs: node and edge query models, feedback that can be faulty, and what happens when these settings are combined.</p>
+          </div>
+        </article>
+
+        <article class="project">
+          <p class="with">undergraduate research</p>
+          <h3>Traffic engineering with predictions</h3>
+          <div class="prose">
+            <p>The smoothness–robustness tradeoff in oblivious routing when a predicted demand vector is available. A high-girth graph family shows that any oblivious routing scheme with consistency <em>C</em> must have robustness <em>n</em><sup>Ω(1/<em>C</em>)</sup>.</p>
+          </div>
+        </article>
+
+        <article class="project">
+          <p class="with">interests</p>
+          <h3>Algorithms and spectral graph theory</h3>
+          <div class="prose">
+            <p>Classical graph algorithms and the spectra that sit underneath them, with predictions as a lens. The longer-term aim is a unified framework rather than a new analysis for each problem: principles that apply across classes of problems, use predictions to get robustness and near-optimal performance on individual instances, and say something about reliable computation when the predictions come from learned models.</p>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <div class="fleuron" aria-hidden="true"><svg class="orn" viewBox="0 0 84 50" focusable="false"><use href="#lotus"/></svg></div>
+
+  <section class="section" id="papers">
+    <div class="label"><span class="zh" lang="zh-Hans">论文</span>Papers</div>
+    <div>
+      <h2>Publications and preprints</h2>
+      <div class="papers">
+        <article class="paper">
+          <h3 class="title">Tree Search With Predictions</h3>
+          <div class="meta">
+            <span>Michael Dinitz, Bob Dong</span>
+            <span class="chip live">NeurIPS 2026</span>
+          </div>
+          <p class="abstract">A point prediction of the target makes tree search as fast as doubling binary search on a path, up to the pathwidth of the tree: O(<em>k</em> log η) queries on pathwidth-<em>k</em> trees, with a matching lower bound and experiments on real networks.</p>
+          <div class="out"><a href="https://arxiv.org/abs/2605.27490">arXiv:2605.27490</a></div>
+        </article>
+        <article class="paper">
+          <h3 class="title">Tree Search With Distributional Predictions</h3>
+          <div class="meta">
+            <span>Michael Dinitz, Bob Dong</span>
+            <span class="chip">Preprint · 2026</span>
+          </div>
+          <p class="abstract">Tree search when the prediction is a distribution over target locations: query-complexity guarantees and matching lower bounds in terms of the tree's pathwidth and the entropy of the prediction, with an empirical evaluation.</p>
+          <div class="out"><a href="https://arxiv.org/abs/2609.32260">arXiv:2609.32260</a></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <div class="fleuron" aria-hidden="true"><svg class="orn" viewBox="0 0 84 50" focusable="false"><use href="#lotus"/></svg></div>
+
+  <section class="section" id="teaching">
+    <div class="label"><span class="zh" lang="zh-Hans">教学</span>Teaching</div>
+    <div>
+      <h2>Teaching assistant, Johns Hopkins</h2>
+      <div class="rows">
+        <div class="row">
+          <div class="when">Fall 2026</div>
+          <div class="what"><strong>Introduction to Algorithms</strong> <span class="sub">· graduate</span></div>
+        </div>
+        <div class="row">
+          <div class="when">Fall 2026</div>
+          <div class="what"><strong>Introduction to Optimization</strong></div>
+        </div>
+        <div class="row">
+          <div class="when">Fall 2024 – Summer 2026</div>
+          <div class="what"><strong>Intermediate Programming</strong></div>
+        </div>
+        <div class="row">
+          <div class="when">Spring 2025</div>
+          <div class="what"><strong>Cryptology and Coding</strong></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <div class="fleuron" aria-hidden="true"><svg class="orn" viewBox="0 0 84 50" focusable="false"><use href="#lotus"/></svg></div>
+
+  <section class="section" id="beyond">
+    <div class="label"><span class="zh" lang="zh-Hans">余事</span>Beyond</div>
+    <div class="prose">
+      <h2>Outside the main line</h2>
+      <p>Away from the board: philosophy of mathematics, moral philosophy, Confucian thought, and reading in Chinese.</p>
+      <p>I enjoy running, movies, and comedy in all forms. K-pop is the thing I love most: NewJeans, aespa, BTS, MEOVV, EXO, IU, Taeyeon, SISTAR, RESCENE, izna, Hearts2Hearts, and Girls' Generation. My biases are Haerin and V.</p>
+    </div>
+  </section>
+
+
+  <footer>
+    <div class="band fleuron" aria-hidden="true"><svg class="orn" viewBox="0 0 84 50" focusable="false"><use href="#lotus"/></svg></div>
+    <span>Last updated October 2026</span>
+    <span class="right">Plain HTML, no framework <svg class="seal" aria-hidden="true" focusable="false" viewBox="0 0 64 64"><use href="#seal"/></svg></span>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    var btn = document.querySelector('.theme-toggle');
+    if (!btn) return;
+    var mq = window.matchMedia ? window.matchMedia('(prefers-color-scheme: dark)') : null;
+    function current() {
+      var t = document.documentElement.getAttribute('data-theme');
+      if (t === 'dark' || t === 'light') return t;
+      return mq && mq.matches ? 'dark' : 'light';
+    }
+    function paint() {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      btn.classList.toggle('is-dark', current() === 'dark');
+      var label = next === 'dark' ? 'Switch to dark mode' : 'Switch to light mode';
+      btn.setAttribute('aria-label', label);
+      btn.title = label;
+    }
+    btn.addEventListener('click', function () {
+      var next = current() === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      try { localStorage.setItem('theme', next); } catch (e) {}
+      paint();
+    });
+    if (mq && mq.addEventListener) mq.addEventListener('change', paint);
+    paint();
+  })();
+
+</script>
+</body>
+</html>
