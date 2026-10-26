@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bob Dong</title>
+<meta name="description" content="Bob Dong — Johns Hopkins University. Algorithms with predictions, spectral graph theory.">
+<style>
+  :root {
+    --bg: #ffffff;
+    --fg: #1c1c1c;
+    --muted: #6a6a6a;
+    --rule: #e3e3e3;
+    --link: #1a56a0;
+    --link-hover: #0f3f7d;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #161616;
+      --fg: #e6e6e6;
+      --muted: #9b9b9b;
+      --rule: #333333;
+      --link: #86b4f0;
+      --link-hover: #b1cdf6;
+    }
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-padding-top: 1.5rem; }
+  body {
+    max-width: 680px;
+    margin: 0 auto;
+    padding: 3rem 1.25rem 5rem;
+    font-family: Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, serif;
+    font-size: 18px;
+    line-height: 1.65;
+    color: var(--fg);
+    background: var(--bg);
+  }
+
+  a {
+    color: var(--link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: .18em;
+    text-decoration-color: color-mix(in srgb, var(--link) 40%, transparent);
+  }
+  a:hover { color: var(--link-hover); text-decoration-color: currentColor; }
+  a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
+
+  h1, h2, h3 { font-weight: 700; line-height: 1.2; margin: 0; }
+  h1 { font-size: 2.1rem; letter-spacing: -.01em; }
+  h2 { font-size: 1.35rem; margin-bottom: 1.2rem; }
+  h3 { font-size: 1.1rem; margin: 1.8rem 0 .35rem; }
+  p, ul { margin: 0 0 1em; }
+  ul { padding-left: 1.2rem; }
+  li { margin-bottom: .3em; }
+  sup { font-size: .75em; line-height: 0; }
+
+  /* header: name and contact beside the photo */
+  .header { display: grid; grid-template-columns: 1fr 150px; gap: 2rem; align-items: start; margin-bottom: 2.5rem; }
+  .header p { margin: 0; }
+  .affil { color: var(--muted); margin-top: .35rem; }
+  .email { margin-top: .35rem; }
+  nav { display: flex; gap: 1.4rem; margin-top: 1.4rem; }
+  .photo { width: 150px; aspect-ratio: 4 / 5; object-fit: cover; border-radius: 3px; display: block; }
+
+  section { margin-top: 2.5rem; padding-top: 2.5rem; border-top: 1px solid var(--rule); }
+  .about { margin-top: 0; padding-top: 0; border-top: 0; }
+  .meta { color: var(--muted); font-style: italic; margin-bottom: .5rem; }
+
+  /* teaching: term in the left column, course in the right */
+  .courses { display: grid; grid-template-columns: max-content 1fr; column-gap: 1.5rem; row-gap: .5rem; margin: 0; }
+  .courses dt { color: var(--muted); font-variant-numeric: tabular-nums; }
+  .courses dd { margin: 0; }
+
+  @media (max-width: 600px) {
+    body { font-size: 17px; padding-top: 2rem; }
+    .header { grid-template-columns: 1fr; gap: 1.25rem; }
+    .photo { width: 120px; order: -1; }
+    .courses { grid-template-columns: 1fr; row-gap: .15rem; }
+    .courses dd { margin-bottom: .7rem; }
+  }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div>
+    <h1>Bob Dong</h1>
+    <p class="affil">Computer Science and Mathematics, Johns Hopkins University</p>
+    <p class="email"><a href="mailto:bdong9@jh.edu">bdong9@jh.edu</a></p>
+    <nav>
+      <a href="#research">Research</a>
+      <a href="#papers">Papers</a>
+      <a href="#teaching">Teaching</a>
+    </nav>
+  </div>
+  <img class="photo" src="pic.jpg" alt="Bob Dong">
+</header>
+
+<main>
+
+<section class="about">
+  <p>I'm a senior at Johns Hopkins, double majoring in computer science and mathematics. I work with <a href="https://www.cs.jhu.edu/~mdinitz">Michael Dinitz</a> on algorithms with predictions.</p>
+  <p>My interests are in the design of efficient algorithms and in their analysis beyond the worst case, through learning-augmented, per-instance, and smoothed guarantees. I want to understand how algorithms can be made more efficient along two lines.</p>
+
+  <h3>Spectral graph theory and streaming algorithms</h3>
+  <p>I am drawn to the connection between graph spectra and algorithms: Laplacian solvers, spectral sparsifiers, and expander decompositions underlie the fastest known algorithms for flows, cuts, and dynamic graph problems. The question I want to pursue is how much of this machinery survives when the algorithm cannot see the whole graph. Spectral sparsification and expander decomposition can both be computed in a single pass over a graph stream; I want to know which other spectral primitives can, in streaming, query, and local models, and what they buy for sublinear graph algorithms. High-dimensional expanders enter the same question from the other side: their local-to-global theorems turn spectral conditions on links into global expansion, have already given algorithms for counting matroid bases and approximating constraint satisfaction, and are exactly the kind of certificate a sublinear algorithm can check locally.</p>
+
+  <h3>A general theory of learning-augmented algorithms, and beyond</h3>
+  <p>Learning-augmented algorithms for ski rental, caching, scheduling, matching, and search have been developed one problem at a time, each with its own notion of prediction and error. Yet many of these problems come in families with a shared classical analysis. I want to know whether the structure carries over at the level of the family: for a class of problems with similar classical solutions, which parameter governs the value of a prediction, and what per-instance optimality is achievable. A further question is whether methods that are not explicitly algorithmic, such as learned heuristics used when the real-world variables are too complicated to model, can be analyzed with the tools of theoretical computer science and can benefit from the same framework.</p>
+</section>
+
+<section id="now">
+  <h2>Now</h2>
+  <ul>
+    <li><em>Tree Search With Predictions</em> was accepted at NeurIPS 2026.</li>
+    <li>TA for graduate Introduction to Algorithms and for Introduction to Optimization.</li>
+  </ul>
+</section>
+
+<section id="research">
+  <h2>Research</h2>
+  <p>Worst-case analysis assumes an algorithm knows nothing about its input. In practice it usually knows something: a learned estimate, a sample from a related distribution, a heuristic that was right last time. The design problem is to use that information so the algorithm beats the classical bound when the prediction is good, matches it when the prediction is useless, and degrades smoothly in between.</p>
+
+  <h3>Tree search with predictions</h3>
+  <p class="meta">With Michael Dinitz. NeurIPS 2026.</p>
+  <p>A target <em>t</em> is hidden at a vertex of a tree. A query at a vertex either finds <em>t</em> or reveals which component of the tree, with that vertex removed, contains it. On a sorted array, a prediction <em>s</em> of the target's position lets doubling binary search finish in O(log η) queries, where η is the prediction error. Does the same hold on a tree, with η the distance from <em>s</em> to <em>t</em>?</p>
+  <p>In general, no: no deterministic or randomized algorithm achieves O(log η) on every tree. But on trees of pathwidth <em>k</em>, a search that runs one doubling binary search per spine of the decomposition finds the target in O(<em>k</em> log η) queries, and no algorithm can beat Ω(<em>k</em> log η) across such trees. Running centroid search alongside keeps the classical O(log <em>n</em>) as a fallback. On spanning trees of real networks, the method beats both centroid search and naive tracing over a middle band of prediction errors.</p>
+
+  <h3>Tree search with distributional predictions</h3>
+  <p class="meta">With Michael Dinitz. Preprint, 2026.</p>
+  <p>Here the prediction is not a single vertex but a distribution over where the target might be, and the searcher has to decide how much to lean on it. We give query-complexity guarantees for this setting with matching lower bounds; the bounds depend on the tree's pathwidth and on the entropy of the predicted target, so a confident prediction buys more than a diffuse one. An empirical evaluation accompanies the theory.</p>
+
+  <h3>Graph search with predictions</h3>
+  <p class="meta">Ongoing, with Michael Dinitz.</p>
+  <p>The same question on general graphs: node and edge query models, feedback that can be faulty, and what happens when these settings are combined.</p>
+
+  <h3>Traffic engineering with predictions</h3>
+  <p class="meta">Undergraduate research.</p>
+  <p>The smoothness–robustness tradeoff in oblivious routing when a predicted demand vector is available. A high-girth graph family shows that any oblivious routing scheme with consistency <em>C</em> must have robustness <em>n</em><sup>Ω(1/<em>C</em>)</sup>.</p>
+</section>
+
+<section id="papers">
+  <h2>Papers</h2>
+
+  <h3>Tree Search With Predictions</h3>
+  <p class="meta">Michael Dinitz and Bob Dong. NeurIPS 2026. <a href="https://arxiv.org/abs/2605.27490">arXiv:2605.27490</a></p>
+  <p>A point prediction of the target makes tree search as fast as doubling binary search on a path, up to the pathwidth of the tree: O(<em>k</em> log η) queries on pathwidth-<em>k</em> trees, with a matching lower bound and experiments on real networks.</p>
+
+  <h3>Tree Search With Distributional Predictions</h3>
+  <p class="meta">Michael Dinitz and Bob Dong. Preprint, 2026. <a href="https://arxiv.org/abs/2609.32260">arXiv:2609.32260</a></p>
+  <p>Tree search when the prediction is a distribution over target locations: query-complexity guarantees and matching lower bounds in terms of the tree's pathwidth and the entropy of the prediction, with an empirical evaluation.</p>
+</section>
+
+<section id="teaching">
+  <h2>Teaching</h2>
+  <p>Teaching assistant at Johns Hopkins.</p>
+  <dl class="courses">
+    <dt>Fall 2026</dt><dd>Introduction to Algorithms (graduate)</dd>
+    <dt>Fall 2026</dt><dd>Introduction to Optimization</dd>
+    <dt>Fall 2024 – Summer 2026</dt><dd>Intermediate Programming</dd>
+    <dt>Spring 2026</dt><dd>Cryptology and Coding</dd>
+  </dl>
+</section>
+
+</main>
+
+</body>
+</html>
